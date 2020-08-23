@@ -29,6 +29,8 @@ pipeline {
                   echo 'Deploying to AWS...'
                   withAWS(credentials: 'aws', region: 'us-east-1') {
                       sh "aws eks --region us-east-1 update-kubeconfig --name capstone"
+                      sh "kubectl set image deployments/capstone-cloud-devops-fernando capstone-cloud-devops-fernando=ferto31/capstone-cloud-devops-fernando:latest"
+
                       sh "kubectl apply -f deployment/deployment.yml"
                       sh "kubectl get nodes"
                       sh "kubectl get deployment"
